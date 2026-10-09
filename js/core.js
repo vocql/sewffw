@@ -1,0 +1,11 @@
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const T=[];const CLEAN=[];const runClean=()=>{while(CLEAN.length)CLEAN.pop()()};const tm=(f,ms)=>{const i=setInterval(f,ms);CLEAN.push(()=>clearInterval(i))};const on=(t,e,f)=>{t.addEventListener(e,f);CLEAN.push(()=>t.removeEventListener(e,f))};
+const rerun=el=>{runClean();const t=T.find(x=>x.id===el.dataset.tool);el.innerHTML='';t.fn(el)};
+const LS={g(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const copy=async(t,b)=>{try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}if(b){const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1200)}};
+const dl=(name,data,type)=>{const u=data instanceof Blob?URL.createObjectURL(data):URL.createObjectURL(new Blob([data],{type}));const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const page=(t,d,body)=>`<h1>${t}</h1><p class="d">${d}</p>${body}`;
+const OBSNOTE=`<div class="note"><b>OBS setup:</b> Export the overlay file, then in OBS add <b>Sources → Browser</b>, tick <b>Local file</b> and select the downloaded .html. Set width/height to match your canvas (e.g. 1920×1080) and leave the custom CSS empty. The page background is transparent.</div>`;
+const overlayDoc=(inner,js='')=>`<!DOCTYPE html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent;overflow:hidden;font-family:system-ui,sans-serif;color:#fff}@keyframes rise{from{transform:translateY(0) scale(.6);opacity:1}to{transform:translateY(-240px) scale(1.4);opacity:0}}.em{position:absolute;bottom:0;font-size:48px;animation:rise 2.2s ease-out forwards}</style></head><body>${inner}<script>${js}<\/script></body></html>`;
+const loadImg=(file,cb,er)=>{const i=new Image();i.onload=()=>cb(i);i.onerror=()=>er('Could not read that image.');i.src=URL.createObjectURL(file)};

@@ -1,0 +1,13 @@
+{
+  "name": "voqcl-tools",
+  "version": "2.0.0",
+  "private": true,
+  "description": "VOQCL TOOLS - static site for GitHub Pages (no backend)",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node tests/qr.test.js && python3 tests/qr_decode.py && node tests/overlay-urls.test.js && node tests/chat-lib.test.js && node tests/render.test.js && node tests/youtube-direct.test.mjs",
+    "dev": "node tests/dev-server.mjs"
+  }
+}
